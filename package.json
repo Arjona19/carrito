@@ -30,7 +30,7 @@
   "homepage": "https://demos.creative-tim.com/argon-design-system-react/",
   "scripts": {
     "start": "serve -s build",
-    "dev":"react-scripts start",
+    "dev": "react-scripts start",
     "build": "react-scripts build && gulp licenses",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -39,7 +39,6 @@
     "minify-sass": "node-sass src/assets/scss/argon-design-system-react.scss src/assets/css/argon-design-system-react.min.css --output-style compressed",
     "map-sass": "node-sass src/assets/scss/argon-design-system-react.scss src/assets/css/argon-design-system-react.css --source-map true",
     "heroku-postbuild": "npm run build"
-    
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -74,7 +73,7 @@
     "eslint-plugin-flowtype": "3.13.0",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
-    "jquery": "3.4.1",
+    "jquery": "3.5.1",
     "typescript": "3.7.5"
   }
 }
