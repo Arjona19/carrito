@@ -31,7 +31,8 @@ import {
   InputGroup,
   Container,
   Row,
-  Col
+  Col,
+  Modal
 } from "reactstrap";
 
 // core components
@@ -44,6 +45,7 @@ class Login extends React.Component {
     this.state = {username:'', password:''}
     this.handleChange = this.handleChange.bind(this);
     this.Log_in = this.Log_in.bind(this);
+    
   }
 
   handleChange(event) {
@@ -66,14 +68,46 @@ class Login extends React.Component {
       }),
     })
     .then(response => {
+      /*if(response.status >= 400 && response.status < 600) {
+        //alert('400');
+      }*/
       return response.json()
     })
     .then((data) => {
-      localStorage.user = JSON.stringify(data);
-      window.location.href = "/";
+     
+      //console.log(JSON.stringify(data));
+
+      if(JSON.stringify(data['iduser']) !== undefined ){
+
+        localStorage.user = JSON.stringify({'userId': JSON.stringify(data['iduser']), 'username': JSON.stringify(data['username'])});
+
+        let userSessionData = JSON.parse(localStorage.user);
+
+        if(userSessionData.userId !== undefined || userSessionData.userId !== null || userSessionData.userId !== ""){
+
+          //let shoppingCartArray = ['{id:1}', '{id:2}'];
+          //localStorage.shoppingCart = shoppingCartArray;
+          
+          localStorage.setItem('shoppingCart', []);
+
+          window.location.href = "/";
+        }
+
+        
+
+      }else{
+
+        alert('Usuario y/o contraseña no validos'); //<- cambiar a modal.
+        
+      }
+
     })
     
   }
+
+
+
+
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -156,7 +190,7 @@ class Login extends React.Component {
                             className="custom-control-label"
                             htmlFor=" customCheckLogin"
                           >
-                            <span>Remember me</span>
+                            <span>Recuérdame</span>
                           </label>
                         </div>
                         <div className="text-center">
@@ -166,7 +200,7 @@ class Login extends React.Component {
                             type="button"
                             onClick={this.Log_in}
                           >
-                            Sign in
+                            Iniciar sesión
                           </Button>
                         </div>
                       </Form>
@@ -203,3 +237,4 @@ class Login extends React.Component {
 }
 
 export default Login;
+

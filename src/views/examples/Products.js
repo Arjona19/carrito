@@ -46,17 +46,18 @@ class Products extends React.Component {
     this.state = { data:[] , cart:[] }
     this.handleChange = this.handleChange.bind(this);
     this._addToCart = this._addToCart.bind(this);
-    this._getToCart = this._getToCart.bind(this);
+    this.getProducts = this.getProducts.bind(this);
   }
-
+//Este es el carrito
   handleChange(event) {
     const target = event.target;
     let nam = target.name;
     let val = target.value;
     this.setState({[nam]: val});
   }
-
-  async _getToCart(){
+//aqui obtengo los productos
+  
+  async getProducts(){
     await fetch('http://localhost:3000/api/', {
       method: 'GET',
       headers: new Headers({
@@ -71,17 +72,70 @@ class Products extends React.Component {
     })
   }
 
+  async addProductToShoppingCart(event){
+    event.preventDefault();
+
+    let productId = event.currentTarget.id;
+
+    await fetch('http://localhost:3000/api/GetProduct/'+ productId,{
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      })
+    })
+    .then(response => {
+      return response.json()
+    })
+    .then((result) => {
+      
+      if(JSON.stringify(result[0]['ID']) !== undefined ){
+
+        let shoppingCartArrayOriginal = localStorage.getItem('shoppingCart');
+
+        let shoppingCartArrayTemp = [].concat(shoppingCartArrayOriginal);
+
+        shoppingCartArrayTemp.push(JSON.stringify(result[0]));
+
+        localStorage.setItem('shoppingCart', shoppingCartArrayTemp);
+
+        //let shoppingCartArrayTemp = shoppingCartArrayOriginal.slice();
+        
+    
+
+        //let shoppingCartArray = localStorage.shoppingCart;
+        //shoppingCartArray.push(JSON.stringify(result[0]));
+       // shoppingCartArray = 
+       // localStorage.shoppingCart.push(JSON.stringify(result[0]));
+
+        
+        //let carro = localStorage.getItem('shoppingCart');
+
+        console.log('carro: '+shoppingCartArrayOriginal);
+      }
+      
+      //this.setState({data:result});
+    })
+  }
+
+
   _addToCart(event){
     event.preventDefault();
     const _id = event.currentTarget.id;
+    //busco en eel arreglo el item
     let product = this.state.data[_id];
+    //lo agrego al obj  carrito
     this.state.cart.push(product);
+    //luego ese mismo objeto se agrega al storage que es como una variable de session
     localStorage.cart = JSON.stringify(this.state.cart);
     alert(JSON.stringify(JSON.parse(localStorage.cart)));;
+    // ahora el siguiente paso seria hacer el calculo del costo total de los productos y que esa misma
+    //informacion se lo devuelva a la api de paypal
+    //solo eso faltaria para el proceso
+    //y otra cosa... la bd, tienes workbenach? simon
   }
 
   componentDidMount() {
-    this._getToCart();
+    this.getProducts();
     //alert(JSON.stringify(JSON.parse(localStorage.cart)));
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -149,6 +203,7 @@ class Products extends React.Component {
               <Row className="justify-content-center">
                 <Col lg="12">
                   <Row className="row-grid">
+                    {/* {es como un foreach} */}
                     {this.state.data.map(
                       (item, i) => 
                       <Col lg="4" key={item.ID}>
@@ -203,12 +258,13 @@ class Products extends React.Component {
                             </InputGroup>
                         </FormGroup>
                       </Form> */}
+                      {/* obtengo el id del arreglo desde el botton */}
                         <Button
                             className="mt-4  btn-icon"
                             color="success"
-                            id={i}
+                            id={item.ID}
                             href="#pablo"
-                            onClick={this._addToCart}
+                            onClick={this.addProductToShoppingCart}
                           >
                       <span className="btn-inner--icon">
                         <i className="fa fa-cart-plus mr-2" />

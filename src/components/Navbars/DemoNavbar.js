@@ -64,6 +64,16 @@ class DemoNavbar extends React.Component {
     });
   };
 
+  Log_Out(event){
+    
+    event.preventDefault();
+
+    localStorage.removeItem('user');
+    localStorage.removeItem('shoppingCart');
+
+    window.location.href = "/";
+  };
+
   render() {
     return (
       <>
@@ -135,8 +145,9 @@ class DemoNavbar extends React.Component {
                     <Button
                       className="btn-neutral btn-icon"
                       color="default"
+                      onClick={this.Log_Out}
                       href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
-                      target="_blank"
+                      //target="_blank"
                     >
                       <span className="btn-inner--icon">
                         <i className="fa fa-cart-plus mr-2" />
