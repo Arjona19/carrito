@@ -91,10 +91,19 @@ class Products extends React.Component {
   }
 
   _setTotal(){
+
+    let shoppingCartArrayOriginal = localStorage.getItem('shoppingCart');
+
+    if(shoppingCartArrayOriginal == ""){
+      
+    }
+
     let arrayTemp = JSON.parse(localStorage.cart);
-    var total =0;
-    arrayTemp.map((i)=> total = total + i.precio);
-    localStorage.total = total;
+      var total =0;
+      arrayTemp.map((i)=> total = total + i.precio);
+      localStorage.total = total;
+
+    
   }
 
   _addToCart(event){
@@ -129,9 +138,9 @@ class Products extends React.Component {
   componentDidMount() {
       this.getProducts();
       //Cuando te haya corrido agrega un libro, despues descomentas esto
-      // this._setTotal();
-      // this.setState({arrayTemp:JSON.parse(localStorage.cart)})
-      // this.setState({NumRows:JSON.parse(localStorage.cart).length})
+       this._setTotal();
+       this.setState({arrayTemp:JSON.parse(localStorage.cart)})
+       this.setState({NumRows:JSON.parse(localStorage.cart).length})
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;

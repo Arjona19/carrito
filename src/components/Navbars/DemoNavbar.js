@@ -58,10 +58,27 @@ class DemoNavbar extends React.Component {
   Log_Out(event){  
     event.preventDefault();
     localStorage.removeItem('user');
-    localStorage.removeItem('shoppingCart');
+    localStorage.removeItem('cart'); //total
+    localStorage.removeItem('total');
     window.location.href = "/";
   };
 
+  async Pay(event){  
+    event.preventDefault();
+
+    await fetch('http://localhost:3000/api/pay/'+500,{
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      })
+    }).then(response => {
+      return response.json()
+    })
+    .then((result) => {
+      console.log(result.paypal_link);
+      window.location.href = result.paypal_link;
+    })
+  }
   render() {
     return (
       <>
@@ -176,7 +193,7 @@ class DemoNavbar extends React.Component {
                       </Row>
                       </div>
                       <div className="modal-footer">
-                        <Button color="success" type="button">
+                        <Button color="success" onClick={this.Pay} type="button">
                           PROCEDER A PAGAR
                         </Button>
                         <Button

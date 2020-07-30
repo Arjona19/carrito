@@ -70,6 +70,7 @@ class Login extends React.Component {
           //localStorage.shoppingCart = shoppingCartArray;
           
           localStorage.setItem('cart', []);
+          //localStorage.setItem('total', 0);
 
           window.location.href = "/";
         }
