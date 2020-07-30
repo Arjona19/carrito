@@ -70,7 +70,7 @@ class DemoNavbar extends React.Component {
 
     localStorage.removeItem('user');
     localStorage.removeItem('shoppingCart');
-
+    localStorage.clear();
     window.location.href = "/";
   };
 

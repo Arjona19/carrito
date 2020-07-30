@@ -45,7 +45,10 @@ class Products extends React.Component {
     super(props);
     this.state = { data:[] , cart:[] }
     this.handleChange = this.handleChange.bind(this);
-    this._addToCart = this._addToCart.bind(this);
+    //this._addToCart = this._addToCart.bind(this);
+    this._addProductToShoppingCart = this._addProductToShoppingCart.bind(this);
+    this._deleteProductToShoppingCart = this._deleteProductToShoppingCart.bind(this);
+
     this.getProducts = this.getProducts.bind(this);
   }
 //Este es el carrito
@@ -69,55 +72,89 @@ class Products extends React.Component {
     })
     .then((result) => {
       this.setState({data:result});
+      console.log('data: '+this.state.data);
     })
   }
 
-  async addProductToShoppingCart(event){
+  
+  _addProductToShoppingCart(event){
+    event.preventDefault();
+    const _id = event.currentTarget.id;
+    //busco en eel arreglo el item
+    let product = this.state.data[_id];
+
+    let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
+
+    if(shoppingCart == ""){ //<--------- carrito inicial.
+
+      let shoppingCart_temp = [];
+      shoppingCart_temp.push(product);
+
+      localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+
+      alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+    
+    }else{
+
+      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
+
+      //---- comprobamos si existe un item 
+      let existInShoppingCart = false;
+
+      shoppingCart_temp.forEach(itemInShoppingCart => {
+
+        if(product.ID == itemInShoppingCart.ID){
+          existInShoppingCart = true;
+        }
+        
+      });
+
+      //----
+
+      if(existInShoppingCart == true){
+
+        alert('no puedes agregarlo, ya esta agregado en el carrito!. '); //<------------------ cambiarlo a modal
+      }else{
+        shoppingCart_temp.push(product);
+        localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+
+        alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+        
+      }
+
+    }
+    
+  }
+
+  //_getNumberOfProductsToShoppingCart()
+
+  _deleteProductToShoppingCart(event){
     event.preventDefault();
 
-    let productId = event.currentTarget.id;
+    let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
 
-    await fetch('http://localhost:3000/api/GetProduct/'+ productId,{
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      })
-    })
-    .then(response => {
-      return response.json()
-    })
-    .then((result) => {
-      
-      if(JSON.stringify(result[0]['ID']) !== undefined ){
+    if(shoppingCart !== ""){ 
 
-        let shoppingCartArrayOriginal = localStorage.getItem('shoppingCart');
+      const _id = event.currentTarget.id;
+      //busco en eel arreglo el item
+      let product = this.state.data[_id];
 
-        let shoppingCartArrayTemp = [].concat(shoppingCartArrayOriginal);
+      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
 
-        shoppingCartArrayTemp.push(JSON.stringify(result[0]));
+      let indexOfProduct = shoppingCart_temp.findIndex(ele => JSON.stringify(ele) == JSON.stringify(product));
 
-        localStorage.setItem('shoppingCart', shoppingCartArrayTemp);
 
-        //let shoppingCartArrayTemp = shoppingCartArrayOriginal.slice();
-        
+      shoppingCart_temp.splice(indexOfProduct,1); //borar el elemento
+      localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+      alert('El manual ha sido borrado del carrido con exito!.'); //<------------------ cambiarlo a modal
+
+    }
     
-
-        //let shoppingCartArray = localStorage.shoppingCart;
-        //shoppingCartArray.push(JSON.stringify(result[0]));
-       // shoppingCartArray = 
-       // localStorage.shoppingCart.push(JSON.stringify(result[0]));
-
-        
-        //let carro = localStorage.getItem('shoppingCart');
-
-        console.log('carro: '+shoppingCartArrayOriginal);
-      }
-      
-      //this.setState({data:result});
-    })
   }
 
 
+
+  /*
   _addToCart(event){
     event.preventDefault();
     const _id = event.currentTarget.id;
@@ -133,7 +170,7 @@ class Products extends React.Component {
     //solo eso faltaria para el proceso
     //y otra cosa... la bd, tienes workbenach? simon
   }
-
+*/
   componentDidMount() {
     this.getProducts();
     //alert(JSON.stringify(JSON.parse(localStorage.cart)));
@@ -262,15 +299,30 @@ class Products extends React.Component {
                         <Button
                             className="mt-4  btn-icon"
                             color="success"
-                            id={item.ID}
+                            id={i}
                             href="#pablo"
-                            onClick={this.addProductToShoppingCart}
+                            onClick={this._addProductToShoppingCart}
                           >
                       <span className="btn-inner--icon">
                         <i className="fa fa-cart-plus mr-2" />
                       </span>
                       <span className="nav-link-inner--text ml-1">
                         AGREGAR AL CARRITO
+                      </span>
+                          </Button>
+
+                          <Button
+                            className="mt-4  btn-icon"
+                            color="success"
+                            id={i}
+                            href="#pablo"
+                            onClick={this._deleteProductToShoppingCart}
+                          >
+                      <span className="btn-inner--icon">
+                        <i className="fa fa-cart-plus mr-2" />
+                      </span>
+                      <span className="nav-link-inner--text ml-1">
+                        BORRAR del CARRITO
                       </span>
                           </Button>
 
