@@ -1,11 +1,8 @@
 //import React from "react";
-import React, { useState } from 'react';
+import React from 'react';
 import {
-    Button,
-    NavLink,
-    NavItem,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
-    
+    Button,DropdownToggle, DropdownMenu, DropdownItem,
+    UncontrolledDropdown
   } from "reactstrap";
 
 class ButtonLogin extends React.Component{
@@ -13,7 +10,6 @@ class ButtonLogin extends React.Component{
     constructor(props){
         super(props);
         this.state = { name: '', status:false};
-
     }
     //Valido si existe el usuario
     componentDidMount(){
@@ -24,8 +20,6 @@ class ButtonLogin extends React.Component{
             this.setState({name: JSON.parse(user.username)});
             this.setState({status:true});
         }
-        
-        //alert(JSON.stringify(JSON.parse(localStorage.cart)));
     }
 
     Log_Out(event){
@@ -42,14 +36,22 @@ class ButtonLogin extends React.Component{
 
             return (
                 <>
-                <NavItem>
-                    <NavLink href="/" onClick={this.Log_Out} >
+                <UncontrolledDropdown group>
+                    <DropdownToggle caret color="secondary">
                         <span className="btn-inner--icon">
                         <i className="fa fa-user-circle mr-2" />
                         </span>
                         {this.state.name}
-                    </NavLink>
-                </NavItem>      
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                            Profile
+                        </DropdownItem>
+                        <DropdownItem href="#pablo" onClick={this.Log_Out}>
+                            Log out
+                        </DropdownItem>
+                    </DropdownMenu>
+                    </UncontrolledDropdown>    
         </>);
         }else{
             return (

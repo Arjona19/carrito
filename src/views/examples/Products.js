@@ -1,36 +1,10 @@
-/*!
-
-=========================================================
-* Argon Design System React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-import { Link } from "react-router-dom";
 // reactstrap components
 import {
   Button,
-  CardImg,
   Badge,
   Card,
-  CardHeader,
   CardBody,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Container,
   Row,
   Col
@@ -43,23 +17,20 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 class Products extends React.Component {
   constructor(props){
     super(props);
-    this.state = { data:[] , cart:[] }
+    this.state = { arrayOriginal:[] , arrayTemp:[] , NumRows:0 }
     this.handleChange = this.handleChange.bind(this);
-    //this._addToCart = this._addToCart.bind(this);
-    this._addProductToShoppingCart = this._addProductToShoppingCart.bind(this);
-    this._deleteProductToShoppingCart = this._deleteProductToShoppingCart.bind(this);
-
+    this._addToCart = this._addToCart.bind(this);
     this.getProducts = this.getProducts.bind(this);
+    this._setTotal = this._setTotal.bind(this);
   }
-//Este es el carrito
+  
   handleChange(event) {
     const target = event.target;
     let nam = target.name;
     let val = target.value;
     this.setState({[nam]: val});
   }
-//aqui obtengo los productos
-  
+
   async getProducts(){
     await fetch('http://localhost:3000/api/', {
       method: 'GET',
@@ -71,109 +42,96 @@ class Products extends React.Component {
       return response.json()
     })
     .then((result) => {
-      this.setState({data:result});
-      console.log('data: '+this.state.data);
+      this.setState({arrayOriginal:result});
     })
   }
 
-  
-  _addProductToShoppingCart(event){
+  async addProductToShoppingCart(event){
     event.preventDefault();
-    const _id = event.currentTarget.id;
-    //busco en eel arreglo el item
-    let product = this.state.data[_id];
+    let productId = event.currentTarget.id;
 
-    let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
+    await fetch('http://localhost:3000/api/GetProduct/'+ productId,{
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      })
+    })
+    .then(response => {
+      return response.json()
+    })
+    .then((result) => {
 
-    if(shoppingCart == ""){ //<--------- carrito inicial.
+      if(JSON.stringify(result[0]['ID']) !== undefined ){
 
-      let shoppingCart_temp = [];
-      shoppingCart_temp.push(product);
+        let shoppingCartArrayOriginal = localStorage.getItem('shoppingCart');
 
-      localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+        let shoppingCartArrayTemp = [].concat(shoppingCartArrayOriginal);
 
-      alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+        shoppingCartArrayTemp.push(JSON.stringify(result[0]));
+
+        localStorage.setItem('shoppingCart', shoppingCartArrayTemp);
+
+        //let shoppingCartArrayTemp = shoppingCartArrayOriginal.slice();
+        
     
-    }else{
 
-      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
+        //let shoppingCartArray = localStorage.shoppingCart;
+        //shoppingCartArray.push(JSON.stringify(result[0]));
+       // shoppingCartArray = 
+       // localStorage.shoppingCart.push(JSON.stringify(result[0]));
 
-      //---- comprobamos si existe un item 
-      let existInShoppingCart = false;
-
-      shoppingCart_temp.forEach(itemInShoppingCart => {
-
-        if(product.ID == itemInShoppingCart.ID){
-          existInShoppingCart = true;
-        }
         
-      });
+        //let carro = localStorage.getItem('shoppingCart');
 
-      //----
-
-      if(existInShoppingCart == true){
-
-        alert('no puedes agregarlo, ya esta agregado en el carrito!. '); //<------------------ cambiarlo a modal
-      }else{
-        shoppingCart_temp.push(product);
-        localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
-
-        alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
-        
+        console.log('carro: '+shoppingCartArrayOriginal);
       }
-
-    }
-    
+      
+      //this.setState({data:result});
+    })
   }
 
-  //_getNumberOfProductsToShoppingCart()
-
-  _deleteProductToShoppingCart(event){
-    event.preventDefault();
-
-    let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
-
-    if(shoppingCart !== ""){ 
-
-      const _id = event.currentTarget.id;
-      //busco en eel arreglo el item
-      let product = this.state.data[_id];
-
-      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
-
-      let indexOfProduct = shoppingCart_temp.findIndex(ele => JSON.stringify(ele) == JSON.stringify(product));
-
-
-      shoppingCart_temp.splice(indexOfProduct,1); //borar el elemento
-      localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
-      alert('El manual ha sido borrado del carrido con exito!.'); //<------------------ cambiarlo a modal
-
-    }
-    
+  _setTotal(){
+    let arrayTemp = JSON.parse(localStorage.cart);
+    var total =0;
+    arrayTemp.map((i)=> total = total + i.precio);
+    localStorage.total = total;
   }
 
-
-
-  /*
   _addToCart(event){
     event.preventDefault();
     const _id = event.currentTarget.id;
-    //busco en eel arreglo el item
-    let product = this.state.data[_id];
-    //lo agrego al obj  carrito
-    this.state.cart.push(product);
-    //luego ese mismo objeto se agrega al storage que es como una variable de session
-    localStorage.cart = JSON.stringify(this.state.cart);
-    alert(JSON.stringify(JSON.parse(localStorage.cart)));;
-    // ahora el siguiente paso seria hacer el calculo del costo total de los productos y que esa misma
-    //informacion se lo devuelva a la api de paypal
-    //solo eso faltaria para el proceso
-    //y otra cosa... la bd, tienes workbenach? simon
+    
+    let product = this.state.arrayOriginal[_id];
+    let existInShoppingCart = false;
+
+    this.state.arrayTemp.forEach(itemInShoppingCart => {
+
+      if(product.ID == itemInShoppingCart.ID){
+        existInShoppingCart = true;
+      }
+      
+    });
+
+    if(existInShoppingCart){
+      alert('no puedes agregarlo, ya esta agregado en el carrito!. ');
+    }else{
+       this.state.arrayTemp.push(product);
+
+        localStorage.cart = JSON.stringify(this.state.arrayTemp);
+      
+      this.setState({NumRows:JSON.parse(localStorage.cart).length})
+      this._setTotal();
+      alert('El manual ha sido agregado al carrido con exito!.');
+    }
+
   }
-*/
+
   componentDidMount() {
-    this.getProducts();
-    //alert(JSON.stringify(JSON.parse(localStorage.cart)));
+      this.getProducts();
+      //Cuando te haya corrido agrega un libro, despues descomentas esto
+      // this._setTotal();
+      // this.setState({arrayTemp:JSON.parse(localStorage.cart)})
+      // this.setState({NumRows:JSON.parse(localStorage.cart).length})
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
@@ -181,7 +139,7 @@ class Products extends React.Component {
   render() {
     return (
       <>
-        <DemoNavbar />
+        <DemoNavbar carrito={this.state.arrayTemp} items={this.state.NumRows}/>
         <main ref="main">
         <section className="section section-shaped section-lg">
             <div className="shape shape-style-1 bg-gradient-default">
@@ -241,7 +199,7 @@ class Products extends React.Component {
                 <Col lg="12">
                   <Row className="row-grid">
                     {/* {es como un foreach} */}
-                    {this.state.data.map(
+                    {this.state.arrayOriginal.map(
                       (item, i) => 
                       <Col lg="4" key={item.ID}>
                       <Card className="card-lift--hover shadow border-0">
@@ -301,28 +259,13 @@ class Products extends React.Component {
                             color="success"
                             id={i}
                             href="#pablo"
-                            onClick={this._addProductToShoppingCart}
+                            onClick={this._addToCart}
                           >
                       <span className="btn-inner--icon">
                         <i className="fa fa-cart-plus mr-2" />
                       </span>
                       <span className="nav-link-inner--text ml-1">
                         AGREGAR AL CARRITO
-                      </span>
-                          </Button>
-
-                          <Button
-                            className="mt-4  btn-icon"
-                            color="success"
-                            id={i}
-                            href="#pablo"
-                            onClick={this._deleteProductToShoppingCart}
-                          >
-                      <span className="btn-inner--icon">
-                        <i className="fa fa-cart-plus mr-2" />
-                      </span>
-                      <span className="nav-link-inner--text ml-1">
-                        BORRAR del CARRITO
                       </span>
                           </Button>
 

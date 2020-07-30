@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Design System React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 
 // reactstrap components
@@ -31,8 +14,7 @@ import {
   InputGroup,
   Container,
   Row,
-  Col,
-  Modal
+  Col
 } from "reactstrap";
 
 // core components
@@ -45,7 +27,6 @@ class Login extends React.Component {
     this.state = {username:'', password:''}
     this.handleChange = this.handleChange.bind(this);
     this.Log_in = this.Log_in.bind(this);
-    
   }
 
   handleChange(event) {
@@ -75,9 +56,9 @@ class Login extends React.Component {
     })
     .then((data) => {
      
-      //console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
 
-      if(JSON.stringify(data['iduser']) !== undefined ){
+      if(data !== undefined ){
 
         localStorage.user = JSON.stringify({'userId': JSON.stringify(data['iduser']), 'username': JSON.stringify(data['username'])});
 
@@ -88,7 +69,7 @@ class Login extends React.Component {
           //let shoppingCartArray = ['{id:1}', '{id:2}'];
           //localStorage.shoppingCart = shoppingCartArray;
           
-          localStorage.setItem('shoppingCart', []);
+          localStorage.setItem('cart', []);
 
           window.location.href = "/";
         }
