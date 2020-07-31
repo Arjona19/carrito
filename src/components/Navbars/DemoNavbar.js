@@ -30,6 +30,8 @@ class DemoNavbar extends React.Component {
       collapseOpen: false,
       defaultModal: false
     };
+    //this._getTotalOfShoppingCart = this._getTotalOfShoppingCart.bind(this);
+    this.Log_Out = this.Log_Out.bind(this);
   }
 
   componentDidMount() {  
@@ -58,50 +60,76 @@ class DemoNavbar extends React.Component {
   Log_Out(event){  
     event.preventDefault();
     localStorage.removeItem('user');
-    localStorage.removeItem('shoppingCart'); //total
-    //localStorage.removeItem('total');
+    //localStorage.removeItem('shoppingCart'); //total
+
+    localStorage.shoppingCart = JSON.stringify([]);
+
+    localStorage.clear();
+    //localStorage.setItem('shoppingCart', []);
+
     window.location.href = "/";
   };
 
-  _getTotalOfShoppingCart(){
+  getTotalOfShoppingCart(){
     try {
 
-      let shoppingCart = localStorage.getItem('shoppingCart');
+      if(localStorage["user"]){
+        let shoppingCart = localStorage.getItem('shoppingCart');
 
-      if(shoppingCart !== ""){
-        let shoppingCart_temp = JSON.parse(localStorage.shoppingCart);
-        let total =0;
-        shoppingCart_temp.map((i)=> total = total + i.precio);
+        if(shoppingCart !== null || shoppingCart !== ""){
+          let shoppingCart_temp = JSON.parse(localStorage.shoppingCart);
+          let total =0;
+          shoppingCart_temp.map((i)=> total = total + i.precio);
 
-        return total;
+          return total;
+        }else{
+          return 0;
+        }
       }else{
+        localStorage.setItem('shoppingCart', []);
         return 0;
       }
+  
 
     } catch (error) {
-      console.log(error);
+      return 0;
     }
 
-    /*
-    
-    */
+
   }
 
-  async Pay(event){  
+  async PayWithPaypal(event){  
     event.preventDefault();
 
-    await fetch('http://localhost:3000/api/pay/'+500,{
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    let shoppingCart = localStorage.getItem('shoppingCart');
+
+    //if(shoppingCart !== "" ||shoppingCart !== null || shoppingCart !== undefined){
+
+    if(localStorage["shoppingCart"]){
+
+      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart);
+      let total =0;
+      shoppingCart_temp.map((i)=> total = total + i.precio);
+
+      await fetch('http://localhost:3000/api/pay/'+total,{
+        method: 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        })
+      }).then(response => {
+        return response.json()
       })
-    }).then(response => {
-      return response.json()
-    })
-    .then((result) => {
-      console.log(result.paypal_link);
-      window.location.href = result.paypal_link;
-    })
+      .then((result) => {
+        console.log(result.paypal_link);
+        window.location.href = result.paypal_link;
+
+        localStorage.removeItem('shoppingCart'); 
+        localStorage.setItem('shoppingCart', []);
+      });
+
+    }
+
+    
   }
   render() {
     return (
@@ -211,13 +239,13 @@ class DemoNavbar extends React.Component {
                         </Col>
                         <Col xs="6">
                         <FormGroup>
-                          <Input disabled placeholder="0.00" value={this._getTotalOfShoppingCart()} type="text" />
+                          <Input disabled placeholder="$ 0.00 MXN" value={'$ '+this.getTotalOfShoppingCart()+' MXN'} type="text" />
                         </FormGroup>
                         </Col>
                       </Row>
                       </div>
                       <div className="modal-footer">
-                        <Button color="success" onClick={this.Pay} type="button">
+                        <Button color="success" onClick={this.PayWithPaypal} type="button">
                           PROCEDER A PAGAR
                         </Button>
                         {/*

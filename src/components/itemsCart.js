@@ -89,6 +89,8 @@ class itemsCart extends React.Component{
                                 </span>
                                No hay items
                  </Badge>
+                 <br />
+                 <br />
             </>);
         }
     }

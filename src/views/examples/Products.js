@@ -115,17 +115,23 @@ class Products extends React.Component {
 _getDataToShoppingCart(){
 
   try {
-    let shoppingCart = localStorage.getItem('shoppingCart'); 
 
-    if(shoppingCart !== ""){
+    if(localStorage["user"]){
+      let shoppingCart = localStorage.getItem('shoppingCart'); 
 
-      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
+      if(shoppingCart !== ""){
 
-      return shoppingCart_temp;
+        let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
+
+        return shoppingCart_temp;
+      }else{
+
+        return [];
+      }
     }else{
-
-      return [];
+      localStorage.setItem('shoppingCart', []);
     }
+    
   } catch (error) {
     console.log(error);
   }
@@ -137,22 +143,61 @@ _getDataToShoppingCart(){
 _getNumberOfItemsInTheShoppingCart(){
 
   try {
-    let shoppingCart = localStorage.getItem('shoppingCart'); 
 
-    if(shoppingCart !== ""){
-      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
+    if(localStorage["user"]){
+      let shoppingCart = localStorage.getItem('shoppingCart'); 
 
-      
-      return shoppingCart_temp.length;
+      if(shoppingCart !== ""){
+        let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
+  
+        
+        return shoppingCart_temp.length;
+      }else{
+        
+        return 0;
+      }
+
     }else{
-      
-      return 0;
+      localStorage.setItem('shoppingCart', []);
     }
+
   } catch (error) {
     console.log(error);
   }
 
 }
+
+
+/*
+getTotalOfShoppingCart(){
+  try {
+
+    if(localStorage["user"]){
+
+    }else{
+      localStorage.setItem('shoppingCart', []);
+    }
+
+
+    let shoppingCart = localStorage.getItem('shoppingCart');
+
+    if(shoppingCart !== null){
+      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart);
+      let total =0;
+      shoppingCart_temp.map((i)=> total = total + i.precio);
+
+      return total;
+    }else{
+      return 0;
+    }
+
+  } catch (error) {
+    return 0;
+  }
+
+
+}
+*/
 
   componentDidMount() {
 
