@@ -11,8 +11,10 @@ import Landing from "views/examples/Landing.js";
 import Products from "views/examples/Products.js";
 import Login from "views/examples/Login.js";
 import Profile from "views/examples/Profile.js";
+import ProfileEdit from "views/examples/ProfileEdit.js";
 import Register from "views/examples/Register.js";
 import AboutUs from "views/examples/AboutUs.js";
+import Paypal from "views/examples/Paypal.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -35,6 +37,11 @@ ReactDOM.render(
         render={props => <Profile {...props} />}
       />
       <Route
+        path="/profileedit-page"
+        exact
+        render={props => <ProfileEdit {...props} />}
+      />
+      <Route
         path="/register-page"
         exact
         render={props => <Register {...props} />}
@@ -44,6 +51,12 @@ ReactDOM.render(
         path="/aboutus-page"
         exact
         render={props => <AboutUs {...props} />}
+      />
+      
+      <Route
+        path="/paypal-page"
+        exact
+        render={props => <Paypal {...props} />}
       />
       
       <Redirect to="/" />
