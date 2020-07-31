@@ -44,7 +44,7 @@ class ButtonLogin extends React.Component{
                         {this.state.name}
                     </DropdownToggle>
                     <DropdownMenu>
-                        <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                        <DropdownItem href="/profile-page">
                             Profile
                         </DropdownItem>
                         <DropdownItem href="#pablo" onClick={this.Log_Out}>
