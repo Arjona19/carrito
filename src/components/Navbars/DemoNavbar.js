@@ -58,7 +58,7 @@ class DemoNavbar extends React.Component {
   Log_Out(event){  
     event.preventDefault();
     localStorage.removeItem('user');
-    localStorage.removeItem('cart'); //total
+    localStorage.removeItem('shoppingCart'); //total
     localStorage.removeItem('total');
     window.location.href = "/";
   };

@@ -19,7 +19,8 @@ class Products extends React.Component {
     super(props);
     this.state = { arrayOriginal:[] , arrayTemp:[] , NumRows:0 }
     this.handleChange = this.handleChange.bind(this);
-    this._addToCart = this._addToCart.bind(this);
+    //this._addToCart = this._addToCart.bind(this);
+    this._addProductToShoppingCart = this._addProductToShoppingCart.bind(this);
     this.getProducts = this.getProducts.bind(this);
     this._setTotal = this._setTotal.bind(this);
   }
@@ -45,6 +46,8 @@ class Products extends React.Component {
       this.setState({arrayOriginal:result});
     })
   }
+
+  /*
 
   async addProductToShoppingCart(event){
     event.preventDefault();
@@ -90,6 +93,93 @@ class Products extends React.Component {
     })
   }
 
+  */
+
+ _addProductToShoppingCart(event){
+  event.preventDefault();
+  const _id = event.currentTarget.id;
+  //busco en eel arreglo el item
+  let product = this.state.arrayOriginal[_id];
+
+  let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
+
+  if(shoppingCart == ""){ //<--------- carrito inicial.
+
+    let shoppingCart_temp = [];
+    shoppingCart_temp.push(product);
+
+    localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+
+    alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+  
+  }else{
+
+    let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
+
+    //---- comprobamos si existe un item 
+    let existInShoppingCart = false;
+
+    shoppingCart_temp.forEach(itemInShoppingCart => {
+
+      if(product.ID == itemInShoppingCart.ID){
+        existInShoppingCart = true;
+      }
+      
+    });
+
+    //----
+
+    if(existInShoppingCart == true){
+
+      alert('no puedes agregarlo, ya esta agregado en el carrito!. '); //<------------------ cambiarlo a modal
+    }else{
+      shoppingCart_temp.push(product);
+      localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+
+      alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+      
+    }
+
+  }
+
+  this.state.arrayTemp = this._getDataToShoppingCart();
+  this.setState({NumRows:this._numberOfItemsInTheShoppingCart()});
+  //this._getDataToShoppingCart();
+  //this._numberOfItemsInTheShoppingCart();
+  
+}
+
+_getDataToShoppingCart(){
+
+  let shoppingCart = localStorage.getItem('shoppingCart'); 
+
+  if(shoppingCart !== ""){
+
+    let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
+
+    //this.state.arrayTemp = shoppingCart_temp;
+    return shoppingCart_temp;
+  }else{
+    //this.state.arrayTemp = [];
+    return [];
+  }
+
+}
+
+_numberOfItemsInTheShoppingCart(){
+  let shoppingCart = localStorage.getItem('shoppingCart'); 
+
+  if(shoppingCart !== ""){
+    let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
+
+    //this.state.NumRows = shoppingCart_temp.length;
+    return shoppingCart_temp.length;
+  }else{
+    //this.state.NumRows = 0
+    return 0;
+  }
+}
+
   _setTotal(){
 
     let shoppingCartArrayOriginal = localStorage.getItem('shoppingCart');
@@ -98,12 +188,12 @@ class Products extends React.Component {
       
     }
 
+    /*
     let arrayTemp = JSON.parse(localStorage.cart);
       var total =0;
       arrayTemp.map((i)=> total = total + i.precio);
-      localStorage.total = total;
+      localStorage.total = total;*/
 
-    
   }
 
   _addToCart(event){
@@ -139,8 +229,17 @@ class Products extends React.Component {
       this.getProducts();
       //Cuando te haya corrido agrega un libro, despues descomentas esto
        this._setTotal();
-       this.setState({arrayTemp:JSON.parse(localStorage.cart)})
-       this.setState({NumRows:JSON.parse(localStorage.cart).length})
+       //this.setState({arrayTemp:JSON.parse(localStorage.cart)})
+       //this.setState({NumRows:JSON.parse(localStorage.cart).length})
+
+
+       this.setState({arrayTemp:this._getDataToShoppingCart()});
+       this.setState({NumRows:this._numberOfItemsInTheShoppingCart()});
+
+
+       //this._getDataToShoppingCart();
+       //this._numberOfItemsInTheShoppingCart();
+
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
@@ -268,7 +367,7 @@ class Products extends React.Component {
                             color="success"
                             id={i}
                             href="#pablo"
-                            onClick={this._addToCart}
+                            onClick={this._addProductToShoppingCart}
                           >
                       <span className="btn-inner--icon">
                         <i className="fa fa-cart-plus mr-2" />
