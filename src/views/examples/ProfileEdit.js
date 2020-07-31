@@ -74,24 +74,43 @@ class ProfileEdit extends React.Component {
                     </Col>
                   </Row>
                   <div className="text-center mt-5">
-                    <h3>
-                      Nombre de usuario
-                    </h3>
                     <div className="h6 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Nombre completo
+                        <i className="ni location_pin mr-2" />
+                            Nombre de usuario
                     </div>
-                    <div className="h6 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                      Correo electrónico
+                    <input className="text"></input>
+                    <br></br>
+                    <br></br>
+                    <div className="h6 font-weight-300">
+                        <i className="ni location_pin mr-2" />
+                            Nombre completo
                     </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      Número telefónico
+                    <input className="text"></input>
+                    <br></br>
+                    <br></br>
+                    <div className="h6 font-weight-300">
+                        <i className="ni location_pin mr-2" />
+                            Correo electronico
                     </div>
+                    <input className="text"></input>
+                    <br></br>
+                    <br></br>
+                    <div className="h6 font-weight-300">
+                        <i className="ni location_pin mr-2" />
+                            Número telefónico
+                    </div>
+                    <input className="text"></input>
+                    <br></br>
+                    <br></br>
                   </div>
                   <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
+                        <Button
+                          className="mr-4"
+                          color="success"
+                        >
+                          Guardar
+                        </Button>
                     </Row>
                   </div>
                 </div>
