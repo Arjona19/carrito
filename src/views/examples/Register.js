@@ -83,7 +83,7 @@ class Register extends React.Component {
                   <Card className="bg-secondary shadow border-0">
                     <CardHeader className="bg-white pb-5">
                       <div className="text-muted text-center mb-3">
-                        <small>Sign up with</small>
+                        <small>Registrate con</small>
                       </div>
                       <div className="text-center">
                         <Button
@@ -118,7 +118,7 @@ class Register extends React.Component {
                     </CardHeader>
                     <CardBody className="px-lg-5 py-lg-5">
                       <div className="text-center text-muted mb-4">
-                        <small>Or sign up with credentials</small>
+                        <small>O registrate con credenciales</small>
                       </div>
                       <Form role="form">
                       <FormGroup className="mb-3">
@@ -201,9 +201,9 @@ class Register extends React.Component {
                         </FormGroup>
                         <div className="text-muted font-italic">
                           <small>
-                            password strength:{" "}
+                            Seguridad de la contraseña:{" "}
                             <span className="text-success font-weight-700">
-                              strong
+                              Fuerte
                             </span>
                           </small>
                         </div>
@@ -220,12 +220,12 @@ class Register extends React.Component {
                                 htmlFor="customCheckRegister"
                               >
                                 <span>
-                                  I agree with the{" "}
+                                  Estoy de acuerdo con las{" "}
                                   <a
                                     href="#pablo"
                                     onClick={e => e.preventDefault()}
                                   >
-                                    Privacy Policy
+                                    Politicas de privacidad
                                   </a>
                                 </span>
                               </label>
@@ -239,7 +239,7 @@ class Register extends React.Component {
                             type="button"
                             onClick={this.Sign_up}
                           >
-                            Create account
+                            Crear cuenta
                           </Button>
                         </div>
                       </Form>

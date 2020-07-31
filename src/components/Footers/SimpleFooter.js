@@ -20,11 +20,11 @@ class SimpleFooter extends React.Component {
           <Container>
             <Row className=" row-grid align-items-center mb-5">
               <Col lg="6">
-                <h3 className=" text-primary font-weight-light mb-2">
-                  Thank you for supporting us!
+                <h3 className="text-center text-primary font-weight-light mb-2">
+                  Gracias por apoyarnos!
                 </h3>
-                <h4 className=" mb-0 font-weight-light">
-                  Let's get in touch on any of these platforms.
+                <h4 className="text-center mb-0 font-weight-light">
+                  "El conocimiento es poder". <small className=" mb-0 font-weight-light">- Thomas Hobbes</small>
                 </h4>
               </Col>
               <Col className="text-lg-center btn-wrapper" lg="6">
@@ -38,41 +38,11 @@ class SimpleFooter extends React.Component {
             </Row>
             <hr />
             <Row className=" align-items-center justify-content-md-between">
-              <Col md="6">
-                <div className=" copyright">
+              <Col md="12">
+                <div className="text-center copyright">
                   © {new Date().getFullYear()}{" "}
-                  .
+                  DevLoopers.
                 </div>
-              </Col>
-              <Col md="6">
-                <Nav className=" nav-footer justify-content-end">
-                  <NavItem>
-                    <NavLink href="/">
-                      Inicio
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                  <NavLink href="/aboutus-page" >
-                    Acerca de
-                  </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      href="http://blog.creative-tim.com?ref=adsr-footer"
-                      target="_blank"
-                    >
-                      Blog
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      href="https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md"
-                      target="_blank"
-                    >
-                      MIT License
-                    </NavLink>
-                  </NavItem>
-                </Nav>
               </Col>
             </Row>
           </Container>

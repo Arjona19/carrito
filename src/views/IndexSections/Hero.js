@@ -63,7 +63,7 @@ class Hero extends React.Component {
                         <span className="btn-inner--icon mr-1">
                           <i className="fa fa-send" />
                         </span>
-                        <span className="btn-inner--text">Get started</span>
+                        <span className="btn-inner--text">Empezar</span>
                       </Button>{" "}
 
                     </div>
