@@ -51,20 +51,27 @@ class Paypal extends React.Component {
               <Card className="card-profile shadow mt--300">
                 <div className="px-4">
                   <Row className="justify-content-center">
-                    <Col className="order-lg-2" lg="3">
-                      <div className="card-profile-image">
+                    <Col className="order-lg-3 text-lg-center align-self-lg-center"
+                      lg="4">
+                      <div className="card-profile-actions py-4 mt-lg-0" style={{top: "25px;"}}>
+                        <img
+                            alt="..."
+                            className="img-fluid"
+                            src={require("assets/img/brand/paypal.png")}
+                            style={{ width: "250px" }}
+                        />
                       </div>
                     </Col>
                     <Col
                       className="order-lg-3 text-lg-right align-self-lg-center"
                       lg="4"
                     >
-                      <div className="card-profile-actions py-4 mt-lg-0">
+                      <div className="card-profile-actions py-4 mt-lg-0" style={{bottom: "35px"}}>
                         <img
                             alt="..."
                             className="img-fluid"
                             src={require("assets/img/brand/dev-loopers.png")}
-                            style={{ width: "250px" }}
+                            style={{ width: "200px" }}
                         />
                       </div>
                     </Col>
