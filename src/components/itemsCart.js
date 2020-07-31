@@ -12,12 +12,29 @@ class itemsCart extends React.Component{
         this.state = {status:false}
     }
 
-    _deleteToCart(event){
-        let _id = event.target.id;
-        let arrayTemp = JSON.parse(localStorage.cart);
-        let product = arrayTemp[_id];
-        arrayTemp.pop(product);
-        localStorage.cart = JSON.stringify(arrayTemp);
+    _deleteProductToShoppingCart(event){
+    
+        let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
+    
+        if(shoppingCart !== ""){ 
+
+          let _id = event.target.id;
+
+          let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
+
+
+          //busco en eel arreglo el item
+          //let product = shoppingCart_temp[_id];
+    
+          let indexOfProduct = shoppingCart_temp.findIndex(ele => ele.ID == _id);
+          //let indexOfProduct = shoppingCart_temp.findIndex(ele => JSON.stringify(ele) == JSON.stringify(product));
+    
+          shoppingCart_temp.splice(indexOfProduct,1); //borar el elemento
+          localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+          alert('El manual ha sido borrado del carrido con exito!.'); //<------------------ cambiarlo a modal
+    
+        }
+        
     }
 
     componentDidMount(){
@@ -56,7 +73,7 @@ class itemsCart extends React.Component{
                                 </span>
                                $ {item.precio}.00
                             </Badge> 
-                            <Badge href="/products-page" id={i} onClick={this._deleteToCart.bind()} color="danger" pill className="mr-1">
+                            <Badge href="/products-page" id={item.ID} onClick={this._deleteProductToShoppingCart} color="danger" pill className="mr-1">
                                Quitar del carrito
                             </Badge>   
                             </UncontrolledAlert>

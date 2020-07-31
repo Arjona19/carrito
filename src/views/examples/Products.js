@@ -19,10 +19,9 @@ class Products extends React.Component {
     super(props);
     this.state = { arrayOriginal:[] , arrayTemp:[] , NumRows:0 }
     this.handleChange = this.handleChange.bind(this);
-    //this._addToCart = this._addToCart.bind(this);
     this._addProductToShoppingCart = this._addProductToShoppingCart.bind(this);
     this.getProducts = this.getProducts.bind(this);
-    this._setTotal = this._setTotal.bind(this);
+    
   }
   
   handleChange(event) {
@@ -47,198 +46,120 @@ class Products extends React.Component {
     })
   }
 
-  /*
-
-  async addProductToShoppingCart(event){
-    event.preventDefault();
-    let productId = event.currentTarget.id;
-
-    await fetch('http://localhost:3000/api/GetProduct/'+ productId,{
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      })
-    })
-    .then(response => {
-      return response.json()
-    })
-    .then((result) => {
-
-      if(JSON.stringify(result[0]['ID']) !== undefined ){
-
-        let shoppingCartArrayOriginal = localStorage.getItem('shoppingCart');
-
-        let shoppingCartArrayTemp = [].concat(shoppingCartArrayOriginal);
-
-        shoppingCartArrayTemp.push(JSON.stringify(result[0]));
-
-        localStorage.setItem('shoppingCart', shoppingCartArrayTemp);
-
-        //let shoppingCartArrayTemp = shoppingCartArrayOriginal.slice();
-        
-    
-
-        //let shoppingCartArray = localStorage.shoppingCart;
-        //shoppingCartArray.push(JSON.stringify(result[0]));
-       // shoppingCartArray = 
-       // localStorage.shoppingCart.push(JSON.stringify(result[0]));
-
-        
-        //let carro = localStorage.getItem('shoppingCart');
-
-        console.log('carro: '+shoppingCartArrayOriginal);
-      }
-      
-      //this.setState({data:result});
-    })
-  }
-
-  */
 
  _addProductToShoppingCart(event){
+
+
   event.preventDefault();
-  const _id = event.currentTarget.id;
-  //busco en eel arreglo el item
-  let product = this.state.arrayOriginal[_id];
 
-  let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
+  let userSession = localStorage.getItem('user');
 
-  if(shoppingCart == ""){ //<--------- carrito inicial.
+  console.log(userSession);
+  if(userSession !== null){
 
-    let shoppingCart_temp = [];
-    shoppingCart_temp.push(product);
+    const _id = event.currentTarget.id;
+    //busco en eel arreglo el item
+    let product = this.state.arrayOriginal[_id];
 
-    localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+    let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
 
-    alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
-  
-  }else{
+    if(shoppingCart == ""){ //<--------- carrito inicial.
 
-    let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
-
-    //---- comprobamos si existe un item 
-    let existInShoppingCart = false;
-
-    shoppingCart_temp.forEach(itemInShoppingCart => {
-
-      if(product.ID == itemInShoppingCart.ID){
-        existInShoppingCart = true;
-      }
-      
-    });
-
-    //----
-
-    if(existInShoppingCart == true){
-
-      alert('no puedes agregarlo, ya esta agregado en el carrito!. '); //<------------------ cambiarlo a modal
-    }else{
+      let shoppingCart_temp = [];
       shoppingCart_temp.push(product);
+
       localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
 
       alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
-      
+    
+    }else{
+
+      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
+
+      //---- comprobamos si existe un item 
+      let existInShoppingCart = false;
+
+      shoppingCart_temp.forEach(itemInShoppingCart => {
+
+        if(product.ID == itemInShoppingCart.ID){
+          existInShoppingCart = true;
+        }
+        
+      });
+
+      //----
+
+      if(existInShoppingCart == true){
+
+        alert('no puedes agregarlo, ya esta agregado en el carrito!. '); //<------------------ cambiarlo a modal
+      }else{
+        shoppingCart_temp.push(product);
+        localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+
+        alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+        
+      }
+
     }
 
+    this.state.arrayTemp = this._getDataToShoppingCart();
+    this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
+
+  }else{
+    window.location.href = "/login-page";
   }
 
-  this.state.arrayTemp = this._getDataToShoppingCart();
-  this.setState({NumRows:this._numberOfItemsInTheShoppingCart()});
-  //this._getDataToShoppingCart();
-  //this._numberOfItemsInTheShoppingCart();
   
 }
 
 _getDataToShoppingCart(){
 
-  let shoppingCart = localStorage.getItem('shoppingCart'); 
+  try {
+    let shoppingCart = localStorage.getItem('shoppingCart'); 
 
-  if(shoppingCart !== ""){
+    if(shoppingCart !== ""){
 
-    let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
+      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
 
-    //this.state.arrayTemp = shoppingCart_temp;
-    return shoppingCart_temp;
-  }else{
-    //this.state.arrayTemp = [];
-    return [];
-  }
-
-}
-
-_numberOfItemsInTheShoppingCart(){
-  let shoppingCart = localStorage.getItem('shoppingCart'); 
-
-  if(shoppingCart !== ""){
-    let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
-
-    //this.state.NumRows = shoppingCart_temp.length;
-    return shoppingCart_temp.length;
-  }else{
-    //this.state.NumRows = 0
-    return 0;
-  }
-}
-
-  _setTotal(){
-
-    let shoppingCartArrayOriginal = localStorage.getItem('shoppingCart');
-
-    if(shoppingCartArrayOriginal == ""){
-      
-    }
-
-    /*
-    let arrayTemp = JSON.parse(localStorage.cart);
-      var total =0;
-      arrayTemp.map((i)=> total = total + i.precio);
-      localStorage.total = total;*/
-
-  }
-
-  _addToCart(event){
-    event.preventDefault();
-    const _id = event.currentTarget.id;
-    
-    let product = this.state.arrayOriginal[_id];
-    let existInShoppingCart = false;
-
-    this.state.arrayTemp.forEach(itemInShoppingCart => {
-
-      if(product.ID == itemInShoppingCart.ID){
-        existInShoppingCart = true;
-      }
-      
-    });
-
-    if(existInShoppingCart){
-      alert('no puedes agregarlo, ya esta agregado en el carrito!. ');
+      return shoppingCart_temp;
     }else{
-       this.state.arrayTemp.push(product);
 
-        localStorage.cart = JSON.stringify(this.state.arrayTemp);
-      
-      this.setState({NumRows:JSON.parse(localStorage.cart).length})
-      this._setTotal();
-      alert('El manual ha sido agregado al carrido con exito!.');
+      return [];
     }
-
+  } catch (error) {
+    console.log(error);
   }
+
+  
+
+}
+
+_getNumberOfItemsInTheShoppingCart(){
+
+  try {
+    let shoppingCart = localStorage.getItem('shoppingCart'); 
+
+    if(shoppingCart !== ""){
+      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); 
+
+      
+      return shoppingCart_temp.length;
+    }else{
+      
+      return 0;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+}
 
   componentDidMount() {
-      this.getProducts();
-      //Cuando te haya corrido agrega un libro, despues descomentas esto
-       this._setTotal();
-       //this.setState({arrayTemp:JSON.parse(localStorage.cart)})
-       //this.setState({NumRows:JSON.parse(localStorage.cart).length})
 
+    this.getProducts();
 
-       this.setState({arrayTemp:this._getDataToShoppingCart()});
-       this.setState({NumRows:this._numberOfItemsInTheShoppingCart()});
-
-
-       //this._getDataToShoppingCart();
-       //this._numberOfItemsInTheShoppingCart();
+    this.setState({arrayTemp:this._getDataToShoppingCart()});
+    this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
 
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -335,7 +256,7 @@ _numberOfItemsInTheShoppingCart(){
                                 <span className="btn-inner--icon">
                                     <i className="fa fa-money mr-2" />
                                 </span>
-                               $ {item.precio}.00
+                               $ {item.precio}.00 MXN
                             </Badge>                           
                              <Badge color="warning" pill className="mr-1">
                                 {this.state.tecnologias}

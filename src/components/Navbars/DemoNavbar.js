@@ -59,9 +59,33 @@ class DemoNavbar extends React.Component {
     event.preventDefault();
     localStorage.removeItem('user');
     localStorage.removeItem('shoppingCart'); //total
-    localStorage.removeItem('total');
+    //localStorage.removeItem('total');
     window.location.href = "/";
   };
+
+  _getTotalOfShoppingCart(){
+    try {
+
+      let shoppingCart = localStorage.getItem('shoppingCart');
+
+      if(shoppingCart !== ""){
+        let shoppingCart_temp = JSON.parse(localStorage.shoppingCart);
+        let total =0;
+        shoppingCart_temp.map((i)=> total = total + i.precio);
+
+        return total;
+      }else{
+        return 0;
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+
+    /*
+    
+    */
+  }
 
   async Pay(event){  
     event.preventDefault();
@@ -187,7 +211,7 @@ class DemoNavbar extends React.Component {
                         </Col>
                         <Col xs="6">
                         <FormGroup>
-                          <Input disabled placeholder="Regular" value={localStorage.total} type="text" />
+                          <Input disabled placeholder="0.00" value={this._getTotalOfShoppingCart()} type="text" />
                         </FormGroup>
                         </Col>
                       </Row>
@@ -196,6 +220,7 @@ class DemoNavbar extends React.Component {
                         <Button color="success" onClick={this.Pay} type="button">
                           PROCEDER A PAGAR
                         </Button>
+                        {/*
                         <Button
                           className="ml-auto"
                           color="link"
@@ -203,8 +228,9 @@ class DemoNavbar extends React.Component {
                           type="button"
                           onClick={() => this.toggleModal("defaultModal")}
                         >
-                          Close
+                          Cerrar
                         </Button>
+                        */}
                       </div>
                     </Modal>
                   </NavItem>

@@ -8,6 +8,7 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 import Hero from "./IndexSections/Hero.js";
 
 class Index extends React.Component {
+
   componentDidMount() {
 
     document.documentElement.scrollTop = 0;
