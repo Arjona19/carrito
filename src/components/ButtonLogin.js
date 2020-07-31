@@ -45,10 +45,10 @@ class ButtonLogin extends React.Component{
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem href="/profile-page">
-                            Profile
+                            Mi Perfil
                         </DropdownItem>
                         <DropdownItem href="#pablo" onClick={this.Log_Out}>
-                            Log out
+                            Cerrar Sesión
                         </DropdownItem>
                     </DropdownMenu>
                     </UncontrolledDropdown>    
@@ -65,7 +65,7 @@ class ButtonLogin extends React.Component{
                     <i className="fa fa-user-circle mr-2" />
                     </span>
                     <span className="nav-link-inner--text ml-1">
-                    Login 
+                    Iniciar Sesión 
                     </span>
             </Button> 
         </>);

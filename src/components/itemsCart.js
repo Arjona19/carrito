@@ -87,7 +87,7 @@ class itemsCart extends React.Component{
                                 <span className="btn-inner--icon">
                                     <i className="fa fa-money mr-2" />
                                 </span>
-                               No hay items
+                               No hay productos agregados
                  </Badge>
                  <br />
                  <br />

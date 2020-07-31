@@ -12,7 +12,7 @@ import Products from "views/examples/Products.js";
 import Login from "views/examples/Login.js";
 import Profile from "views/examples/Profile.js";
 import Register from "views/examples/Register.js";
-//import AboutUs from "views/examples/AboutUs.js";
+import AboutUs from "views/examples/AboutUs.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -39,13 +39,13 @@ ReactDOM.render(
         exact
         render={props => <Register {...props} />}
       />
-      {/*
+      
       <Route
         path="/aboutus-page"
         exact
         render={props => <AboutUs {...props} />}
       />
-      */}
+      
       <Redirect to="/" />
     </Switch>
   </BrowserRouter>,
