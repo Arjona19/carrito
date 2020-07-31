@@ -150,17 +150,17 @@ class DemoNavbar extends React.Component {
                 <Nav className="navbar-nav-hover align-items-lg-center" navbar>
                 <NavItem>
                   <NavLink href="/" >
-                    Home
+                    Inicio
                   </NavLink>
                 </NavItem>                
                 <NavItem>
                   <NavLink href="/products-page" >
-                    Products
+                    Productos
                   </NavLink>
-                </NavItem>              
+                </NavItem>
                 <NavItem>
-                  <NavLink href="/" >
-                    About us
+                  <NavLink href="/aboutus-page" >
+                    Acerca de
                   </NavLink>
                 </NavItem>
                 </Nav>
