@@ -1,4 +1,5 @@
 import React from "react";
+import swal from 'sweetalert';
 // reactstrap components
 import {
   Button,
@@ -70,7 +71,8 @@ class Products extends React.Component {
 
       localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
 
-      alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+      //alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+      swal("Exito!", "El manual ha sido agregado al carrido con exito!", "success");
     
     }else{
 
@@ -91,12 +93,14 @@ class Products extends React.Component {
 
       if(existInShoppingCart == true){
 
-        alert('no puedes agregarlo, ya esta agregado en el carrito!. '); //<------------------ cambiarlo a modal
+        //alert('no puedes agregarlo, ya esta agregado en el carrito!. '); //<------------------ cambiarlo a modal
+        swal("Advertencia!", "No puedes agregarlo, ya esta agregado en el carrito", "warning");
       }else{
         shoppingCart_temp.push(product);
         localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
 
-        alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+        //alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+        swal("Exito!", "El manual ha sido agregado al carrido con exito!", "success");
         
       }
 

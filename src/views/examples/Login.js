@@ -1,4 +1,5 @@
 import React from "react";
+//import swal from 'sweetalert';
 
 // reactstrap components
 import {
@@ -76,6 +77,7 @@ class Login extends React.Component {
       }else{
 
         alert('Usuario y/o contraseña no validos'); //<- cambiar a modal.
+        //swal("Hubo un error!", "Usuario y/o contraseña no validos", "error");
         
       }
 
