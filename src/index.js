@@ -15,7 +15,9 @@ import ProfileEdit from "views/examples/ProfileEdit.js";
 import Register from "views/examples/Register.js";
 import AboutUs from "views/examples/AboutUs.js";
 import Paypal from "views/examples/Paypal.js";
+import PaypalError from "views/examples/PaypalError.js";
 import Detail from "views/examples/Detail.js";
+import MyShopping from "views/examples/MyShopping.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -61,9 +63,21 @@ ReactDOM.render(
       />
       
       <Route
+        path="/paypalerror-page"
+        exact
+        render={props => <PaypalError {...props} />}
+      />
+      
+      <Route
         path="/detail-page"
         exact
         render={props => <Detail {...props} />}
+      />
+      
+      <Route
+        path="/myshopping-page"
+        exact
+        render={props => <MyShopping {...props} />}
       />
       
       <Redirect to="/" />
