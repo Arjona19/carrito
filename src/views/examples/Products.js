@@ -346,6 +346,16 @@ getTotalOfShoppingCart(){
                         AGREGAR AL CARRITO
                       </span>
                           </Button>
+                          <Button
+                            className="mt-4  btn-icon"
+                            color="info"
+                            id={i}
+                            href="/detail-page"
+                          >
+                      <span className="btn-inner--icon">
+                        <i className="fa fa-eye mr-2" />
+                      </span>
+                          </Button>
 
                         </CardBody>
                       </Card>

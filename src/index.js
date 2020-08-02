@@ -15,6 +15,7 @@ import ProfileEdit from "views/examples/ProfileEdit.js";
 import Register from "views/examples/Register.js";
 import AboutUs from "views/examples/AboutUs.js";
 import Paypal from "views/examples/Paypal.js";
+import Detail from "views/examples/Detail.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -57,6 +58,12 @@ ReactDOM.render(
         path="/paypal-page"
         exact
         render={props => <Paypal {...props} />}
+      />
+      
+      <Route
+        path="/detail-page"
+        exact
+        render={props => <Detail {...props} />}
       />
       
       <Redirect to="/" />
