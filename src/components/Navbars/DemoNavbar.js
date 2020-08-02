@@ -111,21 +111,33 @@ class DemoNavbar extends React.Component {
       let total =0;
       shoppingCart_temp.map((i)=> total = total + i.precio);
 
-      await fetch('http://localhost:3000/api/pay/'+total,{
-        method: 'GET',
+      let user = JSON.parse(localStorage.user);
+
+      
+      await fetch('http://localhost:3000/api/pay',{
+        method: 'POST',
         headers: new Headers({
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        })
+        }),
+        body: new URLSearchParams({
+          'userId': user.userId,
+          'products': JSON.stringify(shoppingCart_temp),
+          'total': total
+        }),
       }).then(response => {
         return response.json()
       })
       .then((result) => {
+
         console.log(result.paypal_link);
         window.location.href = result.paypal_link;
 
         localStorage.removeItem('shoppingCart'); 
         localStorage.setItem('shoppingCart', []);
+        
       });
+
+      
 
     }
 
