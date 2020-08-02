@@ -57,9 +57,10 @@ class Login extends React.Component {
     })
     .then((data) => {
      
-      console.log(JSON.stringify(data));
+      console.log(data.message);
 
-      if(data !== undefined ){
+      
+      if(data.message !== "Usuario no registrado." ){
 
         localStorage.user = JSON.stringify({'userId': JSON.stringify(data['iduser']), 'username': JSON.stringify(data['username'])});
 
@@ -80,6 +81,7 @@ class Login extends React.Component {
         //swal("Hubo un error!", "Usuario y/o contraseña no validos", "error");
         
       }
+      
 
     })
     

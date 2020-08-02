@@ -51,8 +51,6 @@ class AboutUs extends React.Component {
           console.log(error);
         }
       
-        
-      
       }
 
       _getNumberOfItemsInTheShoppingCart(){
