@@ -350,7 +350,7 @@ getTotalOfShoppingCart(){
                             className="mt-4  btn-icon"
                             color="info"
                             id={i}
-                            href="/detail-page"
+                            href={"/detail-page/"+item.ID}
                           >
                       <span className="btn-inner--icon">
                         <i className="fa fa-eye mr-2" />
