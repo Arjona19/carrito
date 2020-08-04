@@ -25,8 +25,8 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 class Detail extends React.Component {
     constructor(props) {
         super(props);
-        const {match} = this.props;
-        const productId = match.params.productId;
+        // const {match} = this.props;
+        const productId = 1;
         this.state = { arrayTemp:[] , NumRows:0, productId : productId, product : '', comentarios: [], comentario:''};
         this.handleChange = this.handleChange.bind(this);
         this.getProduct = this.getProduct.bind(this);
@@ -235,10 +235,10 @@ class Detail extends React.Component {
 
     componentDidMount() {
 
-        this.setState({arrayTemp:this._getDataToShoppingCart()});
-        this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
-        this.getProduct();
-        this.getComentaries();
+        // this.setState({arrayTemp:this._getDataToShoppingCart()});
+        // this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
+        // this.getProduct();
+        // this.getComentaries();
 
 
         document.documentElement.scrollTop = 0;
