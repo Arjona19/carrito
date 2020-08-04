@@ -27,7 +27,8 @@ class ProductDetail extends React.Component {
   }
 
   componentDidMount() {
-    console.log(props.match.params.productId);
+      // es this.props
+    console.log(this.props.match.params.productId);
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
