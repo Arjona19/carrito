@@ -275,7 +275,7 @@ class Detail extends React.Component {
                                             <img
                                                     alt="..."
                                                     className="img-fluid"
-                                                    src={require("assets/img/brand/dev-loopers.png")}
+                                                    src={"http://localhost:3000/assets/images/portadas/"+this.state.product.imagen}
                                                     style={{ width: "450px" }}
                                                 />
                                             </div>
