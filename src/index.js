@@ -70,9 +70,9 @@ ReactDOM.render(
       />
       
       <Route
-        path="/detail-page/:productId?"
+        path="/detail-page/:productId"
         exact
-        render={props => <Detail {...props} />}
+        render={props => <Detail  {...props} />}
       />
       
       <Route
@@ -81,7 +81,7 @@ ReactDOM.render(
         render={props => <MyShopping {...props} />}
       />
       <Route
-        path="/product-detail/:productId?"
+        path="/product-detail/:productId"
         exact
         render={props => <ProductDetail {...props} />}
       />

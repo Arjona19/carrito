@@ -25,9 +25,8 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 class Detail extends React.Component {
     constructor(props) {
         super(props);
-
-        // let productId = props.match.params.productId;
-        let productId = 1;
+        const {match} = this.props;
+        const productId = match.params.productId;
         this.state = { arrayTemp:[] , NumRows:0, productId : productId, product : '', comentarios: [], comentario:''};
         this.handleChange = this.handleChange.bind(this);
         this.getProduct = this.getProduct.bind(this);
