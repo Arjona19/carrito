@@ -17,6 +17,7 @@ import AboutUs from "views/examples/AboutUs.js";
 import Paypal from "views/examples/Paypal.js";
 import PaypalError from "views/examples/PaypalError.js";
 import Detail from "views/examples/Detail.js";
+import ProductDetail from "views/examples/ProductDetail.js";
 import MyShopping from "views/examples/MyShopping.js";
 
 ReactDOM.render(
@@ -78,6 +79,11 @@ ReactDOM.render(
         path="/myshopping-page"
         exact
         render={props => <MyShopping {...props} />}
+      />
+      <Route
+        path="/product-detail"
+        exact
+        render={props => <ProductDetail {...props} />}
       />
       
       <Redirect to="/" />
