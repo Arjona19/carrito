@@ -170,39 +170,6 @@ _getNumberOfItemsInTheShoppingCart(){
   }
 
 }
-
-
-/*
-getTotalOfShoppingCart(){
-  try {
-
-    if(localStorage["user"]){
-
-    }else{
-      localStorage.setItem('shoppingCart', []);
-    }
-
-
-    let shoppingCart = localStorage.getItem('shoppingCart');
-
-    if(shoppingCart !== null){
-      let shoppingCart_temp = JSON.parse(localStorage.shoppingCart);
-      let total =0;
-      shoppingCart_temp.map((i)=> total = total + i.precio);
-
-      return total;
-    }else{
-      return 0;
-    }
-
-  } catch (error) {
-    return 0;
-  }
-
-
-}
-*/
-
   componentDidMount() {
 
     this.getProducts();
@@ -311,27 +278,7 @@ getTotalOfShoppingCart(){
                                 {this.state.tecnologias}
                             </Badge>                             
                           </div>
-                        {/* <Form role="form" className="hidden">
-                          <FormGroup className="mb-3">
-                            <InputGroup className="input-group-alternative">
-                              <Input 
-                              value="wddeefeff"
-                              name="img"
-                              onChange={this.handleChange}
-                              type="text" />
-                            </InputGroup>
-                          </FormGroup>
-                          <FormGroup>
-                            <InputGroup className="input-group-alternative">
-                              <Input
-                                value="Hola"
-                                name="title"
-                                onChange={this.handleChange}
-                              />
-                            </InputGroup>
-                        </FormGroup>
-                      </Form> */}
-                      {/* obtengo el id del arreglo desde el botton */}
+                      
                         <Button
                             className="mt-4  btn-icon"
                             color="success"

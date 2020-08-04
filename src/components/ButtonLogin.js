@@ -46,6 +46,9 @@ class ButtonLogin extends React.Component{
                     <DropdownMenu>
                         <DropdownItem href="/profile-page">
                             Mi Perfil
+                        </DropdownItem>    
+                        <DropdownItem href="/myshopping-page">
+                            Mis compras
                         </DropdownItem>
                         <DropdownItem href="#pablo" onClick={this.Log_Out}>
                             Cerrar Sesión

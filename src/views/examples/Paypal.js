@@ -11,8 +11,29 @@ class Paypal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { arrayTemp:[] , NumRows:0 }
+    this.state = { arrayTemp:[] , NumRows:0, arrayCompra:[] }
+   // this._getDownloadFile = this._getDownloadFile.bind(this);
   }
+_getDataDownload(){
+  let user = JSON.parse(localStorage.user);
+  fetch('http://localhost:3000/api/getProductSolds', {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }),
+    body: new URLSearchParams({
+      'iduser': JSON.parse(user.userId)
+    })
+  })
+  .then(response => {
+    return response.json()
+  })
+  .then((data) => {
+    this.setState({arrayCompra:data[0]});
+    console.log(this.state.arrayCompra);
+  });
+}
+
 
 _getDataToShoppingCart(){
 
@@ -68,6 +89,7 @@ _getDataToShoppingCart(){
   }
 
   componentDidMount() {
+    this._getDataDownload()
     this.setState({arrayTemp:this._getDataToShoppingCart()});
     this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
 
@@ -151,13 +173,20 @@ _getDataToShoppingCart(){
                   </div>
                   <div className="mt-5 py-5 border-top text-center">
                     <Row className="justify-content-center">
+                      {this.state.arrayCompra.map((item, i)=>
                         <Button
+                          key={i}
                           className="mr-4"
                           color="info"
-                          href="/profileedit-page"
+                          href={"http://localhost:3000/api/download/"+item.archivo}
                         >
-                          Descargar archivo
+                          <span className="btn-inner--icon">
+                            <i className="fa fa-download mr-2" />
+                            </span>
+                          {item.titulo}
                         </Button>
+                      )}
+
                     </Row>
                   </div>
                 </div>
