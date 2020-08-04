@@ -235,10 +235,10 @@ class Detail extends React.Component {
 
     componentDidMount() {
 
-        // this.setState({arrayTemp:this._getDataToShoppingCart()});
-        // this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
-        // this.getProduct();
-        // this.getComentaries();
+        this.setState({arrayTemp:this._getDataToShoppingCart()});
+        this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
+        this.getProduct();
+        this.getComentaries();
 
 
         document.documentElement.scrollTop = 0;
