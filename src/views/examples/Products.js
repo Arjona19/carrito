@@ -33,7 +33,7 @@ class Products extends React.Component {
   }
 
   async getProducts(){
-    await fetch('http://localhost:3000/api/', {
+    await fetch('https://dev-loopers.herokuapp.com/api/', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -252,7 +252,7 @@ _getNumberOfItemsInTheShoppingCart(){
                         <img
                           alt="..."
                           className="img-fluid mb-2"
-                          src={"http://localhost:3000/assets/images/portadas/"+item.imagen}
+                          src={"https://dev-loopers.herokuapp.com/assets/images/portadas/"+item.imagen}
                           style={{ width: "500px" }}
                         />
                           <h6 className="text-success text-uppercase">

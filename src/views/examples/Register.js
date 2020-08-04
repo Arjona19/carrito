@@ -36,7 +36,7 @@ class Register extends React.Component {
   }
   async Sign_up(event) {
     event.preventDefault();
-    await fetch('http://localhost:3000/api/register', {
+    await fetch('https://dev-loopers.herokuapp.com/api/register', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

@@ -22,7 +22,7 @@ class MyShopping extends React.Component {
     }
     _getAllSolds(){
       let user = JSON.parse(localStorage.user);
-      fetch('http://localhost:3000/api/getAllSolds', {
+      fetch('https://dev-loopers.herokuapp.com/api/getAllSolds', {
         method: 'POST',
         headers: new Headers({
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -150,7 +150,7 @@ class MyShopping extends React.Component {
                                                     <td>
                                                     <Button
                                                         className="mr-4 btn btn-outline-info"
-                                                        href={"http://localhost:3000/api/download/"+item.archivo}
+                                                        href={"https://dev-loopers.herokuapp.com/api/download/"+item.archivo}
                                                     >
                                                         Descargar archivo
                                                     </Button>

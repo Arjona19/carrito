@@ -114,7 +114,7 @@ class DemoNavbar extends React.Component {
       let user = JSON.parse(localStorage.user);
 
       
-      await fetch('http://localhost:3000/api/pay',{
+      await fetch('https://dev-loopers.herokuapp.com/api/pay',{
         method: 'POST',
         headers: new Headers({
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

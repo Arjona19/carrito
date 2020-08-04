@@ -168,7 +168,7 @@ class Detail extends React.Component {
         let productId = this.state.productId;
         console.log('productId :'+productId)
 
-        await fetch('http://localhost:3000/api/producto/'+ productId, {
+        await fetch('https://dev-loopers.herokuapp.com/api/producto/'+ productId, {
           method: 'GET',
           headers: new Headers({
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -187,7 +187,7 @@ class Detail extends React.Component {
 
         let productId = this.state.productId;
 
-        await fetch('http://localhost:3000/api/comentarios/'+ productId, {
+        await fetch('https://dev-loopers.herokuapp.com/api/comentarios/'+ productId, {
           method: 'GET',
           headers: new Headers({
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -209,7 +209,7 @@ class Detail extends React.Component {
         let user = JSON.parse(localStorage.user);
         let productId = this.state.productId;
 
-        await fetch('http://localhost:3000/api/comentarios', {
+        await fetch('https://dev-loopers.herokuapp.com/api/comentarios', {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -275,7 +275,7 @@ class Detail extends React.Component {
                                             <img
                                                     alt="..."
                                                     className="img-fluid"
-                                                    src={"http://localhost:3000/assets/images/portadas/"+this.state.product.imagen}
+                                                    src={"https://dev-loopers.herokuapp.com/assets/images/portadas/"+this.state.product.imagen}
                                                     style={{ width: "450px" }}
                                                 />
                                             </div>

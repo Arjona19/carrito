@@ -16,7 +16,7 @@ class Paypal extends React.Component {
   }
 _getDataDownload(){
   let user = JSON.parse(localStorage.user);
-  fetch('http://localhost:3000/api/getProductSolds', {
+  fetch('https://dev-loopers.herokuapp.com/api/getProductSolds', {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -178,7 +178,7 @@ _getDataToShoppingCart(){
                           key={i}
                           className="mr-4"
                           color="info"
-                          href={"http://localhost:3000/api/download/"+item.archivo}
+                          href={"https://dev-loopers.herokuapp.com/api/download/"+item.archivo}
                         >
                           <span className="btn-inner--icon">
                             <i className="fa fa-download mr-2" />
