@@ -1,5 +1,5 @@
 import React from "react";
-
+import swal from 'sweetalert';
 // reactstrap components
 import {
     Button,
@@ -27,8 +27,87 @@ class Detail extends React.Component {
         super(props);
 
         let productId = props.match.params.productId;
-        this.state = { arrayTemp:[] , NumRows:0, productId : productId, product : ''}
+        this.state = { arrayTemp:[] , NumRows:0, productId : productId, product : '', comentarios: [], comentario:''};
+        this.handleChange = this.handleChange.bind(this);
         this.getProduct = this.getProduct.bind(this);
+        this.getComentaries = this.getComentaries.bind(this);
+        this.comentar = this.comentar.bind(this);
+        this._addProductToShoppingCart = this._addProductToShoppingCart.bind(this);
+    }
+
+    handleChange(event) {
+      const target = event.target;
+      let nam = target.name;
+      let val = target.value;
+      this.setState({[nam]: val});
+    }
+
+    _addProductToShoppingCart(event){
+
+
+      event.preventDefault();
+    
+      let userSession = localStorage.getItem('user');
+    
+      console.log(userSession);
+      if(userSession !== null){
+    
+        const _id = event.currentTarget.id;
+        //busco en eel arreglo el item
+        let product = this.state.product;
+    
+        let shoppingCart = localStorage.getItem('shoppingCart'); //primero verficamos si hay algo en session.
+    
+        if(shoppingCart == ""){ //<--------- carrito inicial.
+    
+          let shoppingCart_temp = [];
+          shoppingCart_temp.push(product);
+    
+          localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+    
+          //alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+          swal("Exito!", "El manual ha sido agregado al carrido con exito!", "success");
+        
+        }else{
+    
+          let shoppingCart_temp = JSON.parse(localStorage.shoppingCart); //<-- recupero los items agregados
+    
+          //---- comprobamos si existe un item 
+          let existInShoppingCart = false;
+    
+          shoppingCart_temp.forEach(itemInShoppingCart => {
+    
+            if(product.ID == itemInShoppingCart.ID){
+              existInShoppingCart = true;
+            }
+            
+          });
+    
+          //----
+    
+          if(existInShoppingCart == true){
+    
+            //alert('no puedes agregarlo, ya esta agregado en el carrito!. '); //<------------------ cambiarlo a modal
+            swal("Advertencia!", "No puedes agregarlo, ya esta agregado en el carrito", "warning");
+          }else{
+            shoppingCart_temp.push(product);
+            localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
+    
+            //alert('El manual ha sido agregado al carrido con exito!.'); //<------------------ cambiarlo a modal
+            swal("Exito!", "El manual ha sido agregado al carrido con exito!", "success");
+            
+          }
+    
+        }
+    
+        this.state.arrayTemp = this._getDataToShoppingCart();
+        this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
+    
+      }else{
+        window.location.href = "/login-page";
+      }
+    
+      
     }
 
     _getDataToShoppingCart(){
@@ -87,8 +166,9 @@ class Detail extends React.Component {
       async getProduct(){
 
         let productId = this.state.productId;
+        console.log('productId :'+productId)
 
-        await fetch('http://localhost:3000/api/'+ productId, {
+        await fetch('http://localhost:3000/api/producto/'+ productId, {
           method: 'GET',
           headers: new Headers({
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -103,11 +183,62 @@ class Detail extends React.Component {
         })
       }
 
+      async getComentaries(){
+
+        let productId = this.state.productId;
+
+        await fetch('http://localhost:3000/api/comentarios/'+ productId, {
+          method: 'GET',
+          headers: new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          })
+        })
+        .then(response => {
+          return response.json()
+        })
+        .then((data) => {
+          //console.log(data.length);
+          this.setState({comentarios: data});
+        })
+      }
+
+      async comentar(event) {
+
+        event.preventDefault();
+
+        let user = JSON.parse(localStorage.user);
+        let productId = this.state.productId;
+
+        await fetch('http://localhost:3000/api/comentarios', {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          }),
+          body: new URLSearchParams({
+            'usuarioId': JSON.parse(user.userId),
+            'productoId': productId,
+            'comentario': this.state.comentario
+          }),
+        })
+        .then(response => {
+          /*if(response.status >= 400 && response.status < 600) {
+            //alert('400');
+          }*/
+          return response.json()
+        })
+        .then((data) => {
+          console.log(data);
+          window.location.href = window.location.href;
+        })
+        
+      }
+
     componentDidMount() {
 
         this.setState({arrayTemp:this._getDataToShoppingCart()});
         this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
         this.getProduct();
+        this.getComentaries();
 
 
         document.documentElement.scrollTop = 0;
@@ -180,7 +311,7 @@ class Detail extends React.Component {
                             className="my-4"
                             color="info"
                             type="button" 
-                            onClick={this.updateUserData}              
+                            onClick={this._addProductToShoppingCart}              
                           >
                             Agregar a carrito
                           </Button>
@@ -236,8 +367,8 @@ class Detail extends React.Component {
                             </InputGroupAddon>
                             <Input 
                             placeholder="Comentario"
-                            value={this.state.phone}
-                            name="phone"
+                            value={this.state.comentario}
+                            name="comentario"
                             onChange={this.handleChange}
                             type="textarea" />
                           </InputGroup>
@@ -247,7 +378,7 @@ class Detail extends React.Component {
                             className="my-4"
                             color="success"
                             type="button" 
-                            onClick={this.updateUserData}              
+                            onClick={this.comentar}              
                           >
                             Comentar
                           </Button>
@@ -255,15 +386,18 @@ class Detail extends React.Component {
                                             </div>
                                             
                                             <div className="mt-5 py-5 border-top text-center">
+                                            {this.state.comentarios.map(
+                                              (item, i) => 
                                                 <Row className="justify-content-center">
                                                     <Col lg="12">
                                                 <UncontrolledAlert color="success" toggle={false}>
-          <span className="alert-inner--text ml-1">
-            <strong>Nombre del usuario!</strong> Aqui va el comentario!
-          </span>
-        </UncontrolledAlert>
+                                                  <span className="alert-inner--text ml-1">
+                                                    <strong>{item.username} : </strong> {item.comentario}  {item.created_at}
+                                                  </span>
+                                                </UncontrolledAlert>
                                                 </Col>
                                                 </Row>
+                                                )}
                                             </div>
                                         </CardBody>
                                     </Card>
