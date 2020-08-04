@@ -319,44 +319,6 @@ class Detail extends React.Component {
                           <br></br>
                           <div className="mt-5 py-5 border-top text-center">
                               <Row className="justify-content-center">
-                                {/*
-                                  <Col lg="6">
-                              <FormGroup className="mb-3">
-                              <InputGroup className="input-group-alternative">
-                                  <InputGroupAddon addonType="prepend">
-                                  <InputGroupText>
-                                      <strong>Nombre completo :</strong>
-                                  </InputGroupText>
-                                  </InputGroupAddon>
-                                  <Input 
-                                  placeholder="Nombre de completo"
-                                  value={this.state.name}
-                                  name="name"
-                                  onChange={this.handleChange}
-                                  type="text" />
-                              </InputGroup>
-                              </FormGroup>
-                              </Col>
-                          <br></br>
-                        
-                                                    <Col lg="6">
-                        <FormGroup className="mb-3">
-                          <InputGroup className="input-group-alternative">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <strong>Correo electrónico :</strong>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input 
-                            placeholder="Correo electrónico"
-                            value={this.state.email}
-                            name="email"
-                            onChange={this.handleChange}
-                            type="text" />
-                          </InputGroup>
-                        </FormGroup>
-                                                </Col>
-                          */}
                                                     <Col lg="12">
                         <FormGroup className="mb-3">
                           <InputGroup className="input-group-alternative">

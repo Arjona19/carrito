@@ -252,7 +252,7 @@ _getNumberOfItemsInTheShoppingCart(){
                         <img
                           alt="..."
                           className="img-fluid mb-2"
-                          src={item.imagen}
+                          src={"http://localhost:3000/assets/images/portadas/"+item.imagen}
                           style={{ width: "500px" }}
                         />
                           <h6 className="text-success text-uppercase">
