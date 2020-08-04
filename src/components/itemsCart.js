@@ -31,7 +31,8 @@ class itemsCart extends React.Component{
     
           shoppingCart_temp.splice(indexOfProduct,1); //borar el elemento
           localStorage.shoppingCart = JSON.stringify(shoppingCart_temp);
-          alert('El manual ha sido borrado del carrido con exito!.'); //<------------------ cambiarlo a modal
+          //alert('El manual ha sido borrado del carrido con exito!.'); //<------------------ cambiarlo a modal
+          swal("Exito al eliminar el manual", "El manual ha sido borrado del carrido con exito!.", "success");
     
         }
         
