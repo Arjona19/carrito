@@ -117,6 +117,7 @@ class DemoNavbar extends React.Component {
       await fetch('https://dev-loopers.herokuapp.com/api/pay',{
         method: 'POST',
         headers: new Headers({
+          'mode':'no-cors',
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         }),
         body: new URLSearchParams({
