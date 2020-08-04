@@ -6,16 +6,9 @@ import {
     Card,
     CardHeader,
     CardBody,
-    FormGroup,
-    Form,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     Container,
     Row,
-    Col,
-    UncontrolledAlert
+    Col
 } from "reactstrap";
 
 // core components
@@ -25,9 +18,26 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 class MyShopping extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { arrayTemp:[] , NumRows:0 }
+        this.state = { arrayTemp:[] , NumRows:0, arraySolds:[]}
     }
-
+    _getAllSolds(){
+      let user = JSON.parse(localStorage.user);
+      fetch('http://localhost:3000/api/getAllSolds', {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        }),
+        body: new URLSearchParams({
+          'iduser': JSON.parse(user.userId)
+        })
+      })
+      .then(response => {
+        return response.json()
+      })
+      .then((data) => {
+        this.setState({arraySolds:data});
+      });
+    }
     _getDataToShoppingCart(){
 
         try {
@@ -82,11 +92,9 @@ class MyShopping extends React.Component {
       }
 
     componentDidMount() {
-
+        this._getAllSolds();
         this.setState({arrayTemp:this._getDataToShoppingCart()});
         this.setState({NumRows:this._getNumberOfItemsInTheShoppingCart()});
-
-
         document.documentElement.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
         this.refs.main.scrollTop = 0;
@@ -121,13 +129,15 @@ class MyShopping extends React.Component {
                                             <table class="table">
                                                 <thead class="thead-dark">
                                                     <tr>
-                                                    <th scope="col" width="150px">Imagen</th>
-                                                    <th scope="col">Descripcion</th>
+                                                    <th scope="col" width="150px"></th>
+                                                    <th scope="col">Titulo</th>
                                                     <th scope="col">Accion</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                  {
+                                                    this.state.arraySolds.map((item,i)=>
+                                                    <tr key={i}>
                                                     <th scope="row">
                                                         <img
                                                             alt="..."
@@ -136,16 +146,18 @@ class MyShopping extends React.Component {
                                                             style={{ width: "150px" }}
                                                         />
                                                     </th>
-                                                    <td>Aqui va la descripción del producto comprado</td>
+                                                  <td>{item.titulo}</td>
                                                     <td>
                                                     <Button
                                                         className="mr-4 btn btn-outline-info"
-                                                        href="/profileedit-page"
+                                                        href={"http://localhost:3000/api/download/"+item.archivo}
                                                     >
                                                         Descargar archivo
                                                     </Button>
                                                     </td>
                                                     </tr>
+                                                )}
+                                                   
                                                 </tbody>
                                             </table>
                                             </div>
