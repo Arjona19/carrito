@@ -109,8 +109,9 @@ class ProfileEdit extends React.Component {
       let user = JSON.parse(localStorage.user);
       let userId = JSON.parse(user.userId);
 
-      await fetch('https://dev-loopers.herokuapp.com/api/user/'+userId, {
-        method: 'PUT',
+      //https://dev-loopers.herokuapp.com/api/user/
+      await fetch('https://dev-loopers.herokuapp.com/api/userupdate', {
+        method: 'POST',
         headers: new Headers({
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         }),
@@ -118,7 +119,8 @@ class ProfileEdit extends React.Component {
           'username': this.state.username,
           'name': this.state.name,
           'email': this.state.email,
-          'phone': this.state.phone
+          'phone': this.state.phone,
+          'iduser': userId
         }),
       })
       .then(response => {
