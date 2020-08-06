@@ -318,11 +318,19 @@ class Detail extends React.Component {
                                                 </FormGroup>
                                                 <FormGroup className="mb-3">
                                                     <p className="text-center">
-                                                      <strong>Disponible :</strong>{this.state.product.estatus}
+                                                      <strong>Estado :</strong>{this.state.product.estatus}
                                                     </p>
                                                 </FormGroup>
                                             </Form>
                                             <div className="text-center">
+                                            <Button
+                            className="my-4"
+                            color="info"
+                            type="button" 
+                            href = {this.state.product.preview}          
+                          >
+                            Vista Previa
+                          </Button>
                                             <Button
                             className="my-4"
                             color="info"
@@ -336,6 +344,7 @@ class Detail extends React.Component {
                           <div className="mt-5 py-5 border-top text-center">
                               <Row className="justify-content-center">
                                                     <Col lg="12">
+                                                      
                         <FormGroup className="mb-3">
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
@@ -371,7 +380,7 @@ class Detail extends React.Component {
                                                 <UncontrolledAlert color="success" toggle={false}>
                                                   <span className="alert-inner--text ml-1">
                                                     
-                                                    <strong>{item.username} : </strong> {item.comentario}  {moment(item.created_at).format('DD-MM-YYYY')}
+                                                    <strong>{item.username} : </strong> " {item.comentario} " - {moment(item.created_at).format('DD-MM-YYYY')}
                                                   </span>
                                                 </UncontrolledAlert>
                                                 </Col>
