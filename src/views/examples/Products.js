@@ -208,38 +208,16 @@ _getNumberOfItemsInTheShoppingCart(){
                       <p className="lead text-white">
                        9 de cada 10 estudiantes comienzan a generar ingresos con nuestros manuales.
                       </p>
-                      <div className="btn-wrapper">
-                        <Button
-                          className="btn-icon mb-3 mb-sm-0"
-                          color="info"
-                          href="https://demos.creative-tim.com/argon-design-system-react/#/documentation/alerts?ref=adsr-landing-page"
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <i className="fa fa-code" />
-                          </span>
-                          <span className="btn-inner--text">Manuales gratis</span>
-                        </Button>
-                        <Button
-                          className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
-                          color="default"
-                          href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-landing-page"
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <i className="ni ni-cloud-download-95" />
-                          </span>
-                          <span className="btn-inner--text">
-                            Suscribete
-                          </span>
-                        </Button>
-                      </div>
+
                     </Col>
                   </Row>
                 </div>
               </Container>
             <Container className="pt-lg-7">
             <h1 className="display-3 text-white">
-                 Manuales mas vendidos{" "}
+                 Nuestros manuales{" "}
               </h1>
+              <br/>
               <Row className="justify-content-center">
                 <Col lg="12">
                   <Row className="row-grid">
@@ -275,7 +253,7 @@ _getNumberOfItemsInTheShoppingCart(){
                                $ {item.precio}.00 MXN
                             </Badge>                           
                              <Badge color="warning" pill className="mr-1">
-                                {this.state.tecnologias}
+                                {item.tecnologia}
                             </Badge>                             
                           </div>
                       
@@ -301,6 +279,9 @@ _getNumberOfItemsInTheShoppingCart(){
                           >
                       <span className="btn-inner--icon">
                         <i className="fa fa-eye mr-2" />
+                      </span>
+                      <span className="nav-link-inner--text ml-1">
+                        VER DETALLES
                       </span>
                           </Button>
 

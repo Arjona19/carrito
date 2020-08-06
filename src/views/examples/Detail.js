@@ -298,27 +298,27 @@ class Detail extends React.Component {
                                             <Form role="form">
                                                 <FormGroup className="mb-3">
                                                     <p className="text-center">
-                                                      <strong>Descripción :</strong>{this.state.product.descripcion}
+                                                      <strong>Descripción :</strong> {this.state.product.descripcion}
                                                     </p>
                                                 </FormGroup>
                                                 <FormGroup className="mb-3">
                                                     <p className="text-center">
-                                                      <strong>Precio :</strong> $ {this.state.product.precio} MXN
+                                                      <strong>Precio :</strong> ${this.state.product.precio} MXN
                                                     </p>
                                                 </FormGroup>
                                                 <FormGroup className="mb-3">
                                                     <p className="text-center">
-                                                      <strong>Autor :</strong>{this.state.product.autor}
+                                                      <strong>Autor :</strong> {this.state.product.autor}
                                                     </p>
                                                 </FormGroup>
                                                 <FormGroup className="mb-3">
                                                     <p className="text-center">
-                                                      <strong>Tecnología :</strong>{this.state.product.tecnologia}
+                                                      <strong>Tecnología :</strong> {this.state.product.tecnologia}
                                                     </p>
                                                 </FormGroup>
                                                 <FormGroup className="mb-3">
                                                     <p className="text-center">
-                                                      <strong>Estado :</strong>{this.state.product.estatus}
+                                                      <strong>Estado : </strong>{this.state.product.estatus}
                                                     </p>
                                                 </FormGroup>
                                             </Form>
@@ -380,7 +380,7 @@ class Detail extends React.Component {
                                                 <UncontrolledAlert color="success" toggle={false}>
                                                   <span className="alert-inner--text ml-1">
                                                     
-                                                    <strong>{item.username} : </strong> " {item.comentario} " - {moment(item.created_at).format('DD-MM-YYYY')}
+                                                    <strong>{item.username} : </strong> " {item.comentario} " : {moment(item.created_at).format('DD-MM-YYYY')}
                                                   </span>
                                                 </UncontrolledAlert>
                                                 </Col>
