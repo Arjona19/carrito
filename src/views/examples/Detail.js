@@ -21,6 +21,7 @@ import {
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
+import moment from "moment";
 
 class Detail extends React.Component {
     constructor(props) {
@@ -198,6 +199,21 @@ class Detail extends React.Component {
         })
         .then((data) => {
           //console.log(data.length);
+          //let fechaParse = Date.parse(data[0].created_at);
+          //let fechaParse = moment(data[0].created_at).format('DD-MM-YYYY');
+
+
+
+
+
+
+          //let fechaNumber =  Number(fechaParse);
+          //data[0].created_at = new Date(data[0].created_at);
+
+          //data[0].created_at = fechaParse;
+
+          //data[0].created_at = new Date(fecha);
+          //new Date(Date.parse(item.created_at))
           this.setState({comentarios: data});
         })
       }
@@ -354,7 +370,8 @@ class Detail extends React.Component {
                                                     <Col lg="12">
                                                 <UncontrolledAlert color="success" toggle={false}>
                                                   <span className="alert-inner--text ml-1">
-                                                    <strong>{item.username} : </strong> {item.comentario}  {item.created_at}
+                                                    
+                                                    <strong>{item.username} : </strong> {item.comentario}  {moment(item.created_at).format('DD-MM-YYYY')}
                                                   </span>
                                                 </UncontrolledAlert>
                                                 </Col>
