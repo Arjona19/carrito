@@ -1,4 +1,5 @@
 import React from "react";
+import swal from 'sweetalert';
 
 // reactstrap components
 import { Button, Card, Container, Row, Col, Form, Input, FormGroup, InputGroup, InputGroupText, InputGroupAddon } from "reactstrap";
@@ -128,8 +129,8 @@ class ProfileEdit extends React.Component {
         return response.json()
       })
       .then((data) => {
-       
-        console.log(JSON.stringify(data));
+        swal("Exito!", "Los datos han sido actualizados", "success");
+        //console.log(JSON.stringify(data));
       });
     }
   

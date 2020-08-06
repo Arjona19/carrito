@@ -1,4 +1,5 @@
 import React from "react";
+import swal from 'sweetalert';
 
 // reactstrap components
 import {
@@ -53,7 +54,8 @@ class Register extends React.Component {
       return response.json()
     })
     .then((data) => {
-      alert(JSON.stringify(data))
+      //alert(JSON.stringify(data))
+      swal("Exito!", "El usuario ha sido creado", "success");
     })
   }
   componentDidMount() {
